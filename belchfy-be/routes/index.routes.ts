@@ -1,5 +1,6 @@
 import { Request,Response, Router } from "express";
 import { mediaRouter } from "./media.routes";
+import { playlistRouter } from "./playlists.routes";
 
 export const router = Router()
 
@@ -8,3 +9,5 @@ router.get('/ping', (request: Request, response: Response) => {
 })
 
 router.use('/media', mediaRouter)
+
+router.use('/playlists', playlistRouter)

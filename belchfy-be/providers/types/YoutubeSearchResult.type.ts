@@ -5,5 +5,6 @@ export type YoutubeSearchResult = {
     thumbnail: string,
     title: string,
     videoId: string,
-    views: number
+    views: number,
+    belchfyURL: string,
 }

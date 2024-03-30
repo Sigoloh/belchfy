@@ -36,6 +36,10 @@ def streams(video_id):
 def search(query):
     return Youtube_Provider.search_youtube(query)
 
+@app.route('/youtube/playlist/get/<id>')
+def get_playlist(id):
+    playlist_url = f'https://www.youtube.com/playlist?list={id}'
+    return Youtube_Provider.get_playlists(playlist_url)
 
 if __name__ == '__main__':
     app.run()

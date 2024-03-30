@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import { getAudioStreamsByVideoId, searchInYoutube } from "../providers/PyProvider";
+import { ISearchResultCacheRepository } from "../repositories/interfaces/ISearchResultCache";
 
 export class MediaController{
+    constructor(
+        private searchResultsCacheRepository: ISearchResultCacheRepository
+    ){}
+
     async getMediaByYoutubeId(request: Request, response: Response): Promise<void>{
         try{
             const {videoId} = request.params
@@ -57,9 +62,23 @@ export class MediaController{
                 return;
             }
 
+            const resultInCache =
+                await this.searchResultsCacheRepository
+                    .getCachedSearchResultByQuery(query)
+
+
+            console.log('Cache:')
+            console.log(resultInCache.length)
+            if(resultInCache.length) {
+                response.status(200).json(resultInCache)
+                return
+            }
+
             const results = await searchInYoutube(query)
 
             response.status(200).json(results)
+            
+            this.searchResultsCacheRepository.createSearchCache(results, query)
 
             return;
         } catch (error) {
