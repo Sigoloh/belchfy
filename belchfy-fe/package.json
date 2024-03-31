@@ -12,7 +12,8 @@
     "axios": "^1.6.8",
     "oh-vue-icons": "^1.0.0-rc3",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue3-marquee-slider": "^1.0.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

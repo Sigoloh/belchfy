@@ -32,8 +32,10 @@
                     </div>
                 </div>
             </div>
+            <button @click="previous"><v-icon name="md-skipprevious"></v-icon></button>
             <button @click="play" v-if="!state.isPlaying || state.isEnded"><v-icon name="fa-play"></v-icon></button>
             <button @click="pause" v-if="!state.isPaused && !state.isEnded"><v-icon name="fa-pause"></v-icon></button>
+            <button @click="next"><v-icon name="md-skipnext"></v-icon></button>
             <input type="range" :min="0" step="1" :max="state.duration" v-model="state.currentTime" @change="changeCurrentTime">
             <span class="roboto-regular">{{ parseTime(state.currentTime) }}/{{ parseTime(state.duration) }}</span>
         </div>
@@ -58,6 +60,10 @@
     color: white;
     padding-right: 10px;
     padding-left: 10px;
+}
+
+.player-container .player buttono{
+    cursor: pointer;
 }
 .player-container .player{
     display: flex;
@@ -154,7 +160,7 @@ export default{
             required: true
         }
     },
-    emits: ['ended'],
+    emits: ['ended', 'next', 'previous'],
     setup(props, ctx){
         const audio = ref<HTMLAudioElement | null>(null)
         const state = reactive({
@@ -196,6 +202,21 @@ export default{
             }
         }
 
+        function next(){
+            ctx.emit('next')
+            return;
+        }
+
+        function previous(){
+            if(state.currentTime > 20){
+                state.currentTime = 0;
+                audio.value.currentTime = 0;
+                return;
+            }
+
+            ctx.emit('previous')
+        }
+
         function pause(){
             if(audio.value){
                 audio.value.pause();
@@ -215,6 +236,8 @@ export default{
             ctx,
             audio,
             play,
+            previous,
+            next,
             pause,
             state,
             updateCurrentTime,
