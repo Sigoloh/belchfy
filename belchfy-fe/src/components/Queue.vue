@@ -3,8 +3,8 @@
         <div class="queue-header">
             Queue
             <div class="queue-buttons">
-                <v-icon class="icon-button" name="fa-play" fill="#000" @click="() => play(video.belchfy_url)"/>
-                <v-icon class="icon-button" name="fa-random" fill="#000" @click="() => addVideoToQueue(video)"/>
+                <v-icon class="icon-button" name="fa-play" fill="#000" @click="play"/>
+                <v-icon class="icon-button" name="fa-random" fill="#000" @click="shuffle"/>
             </div>
         </div>
         <div class="videos-in-queue">
@@ -79,6 +79,7 @@
 import {globalState} from '../global'
 import { VueMarqueeSlider } from 'vue3-marquee-slider';
 import '../../node_modules/vue3-marquee-slider/dist/style.css'
+import axios from 'axios'
 
 export default{
     components:{
@@ -90,9 +91,23 @@ export default{
             globalState.queue.delete(video)
             console.log(globalState.queue)
         }
+
+        function shuffle(){
+            globalState.queue.shuffle()
+            return;
+        }
+
+        async function play(){
+            const { data } = await axios.get(globalState.queue.next().belchfy_url)
+            globalState.currentPlay = data[0]
+            globalState.currentPlay.autoPlay = true
+            return
+        }
         return {
             globalState,
-            removeVideoFromQueue
+            shuffle,
+            removeVideoFromQueue,
+            play
         }
     } 
 }

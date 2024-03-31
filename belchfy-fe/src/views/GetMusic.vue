@@ -8,21 +8,21 @@
             <table class="video-table">
                 <tr class="table-header">
                     <td class="playlist-cell">
-                        Playlis t
+                        Playlist
                     </td>
                     <td style="padding-left: 10px; background-color: var(--yellow);">
                         {{ state.result.title }}
                     </td>
                     <td class="playlist-actions" style="background-color: var(--yellow);">
                         <div class="action-buttons">
-                            <button>
+                            <button @click="addPlaylistToQueueShuffleAndPlayFirst">
                                 <v-icon name="fa-random"/>
                             </button>
                         </div>
                     </td>
                     <td class="playlist-actions" style="background-color: var(--yellow);">
                         <div class="action-buttons">
-                            <button>
+                            <button @click="addPlaylistToQueueAndPlayFirst">
                                 <v-icon name="fa-play"/>
                             </button>
                         </div>
@@ -97,7 +97,7 @@
 
 
 .video-table .playlist-actions .action-buttons button{
-    background-color: white;
+    background-color: var(--yellow);
     border: none;
     cursor: pointer;
 }
@@ -268,12 +268,37 @@ export default{
             state.result = await getPlaylist(playlistId)
         }
 
+        async function addPlaylistToQueueAndPlayFirst(){
+            for(const video of state.result.videos){
+                globalState.queue.add(video)
+            }
+
+            const { data } = await axios.get(globalState.queue.next().belchfy_url)
+            globalState.currentPlay = data[0]
+            globalState.currentPlay.autoPlay = true
+        }
+
+        async function addPlaylistToQueueShuffleAndPlayFirst(){
+            for(const video of state.result.videos){
+                globalState.queue.add(video)
+            }
+            globalState.queue.shuffle()
+
+            const { data } = await axios.get(globalState.queue.next().belchfy_url)
+
+            globalState.currentPlay = data[0]
+
+            globalState.currentPlay.autoPlay = true
+        }
+
         return {
             state,
             searchPlaylist,
             parseTime,
             play,
-            addVideoToQueue
+            addVideoToQueue,
+            addPlaylistToQueueAndPlayFirst,
+            addPlaylistToQueueShuffleAndPlayFirst
         }
     }
 }
