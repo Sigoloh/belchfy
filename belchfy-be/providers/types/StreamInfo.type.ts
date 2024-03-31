@@ -7,4 +7,5 @@ export type StreamInfo = {
     mimeType: string,
     expiresInSeconds: number,
     expiresAt: Date,
+    thumbnail: string,
 }

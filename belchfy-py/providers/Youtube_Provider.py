@@ -20,6 +20,7 @@ def get_audio_streams(url: str) -> list:
             'mime_type': audio_stream.mime_type,
             'codec': audio_stream.parse_codecs()[1],
             'file_size': audio_stream.filesize_kb,
+            'thumbnail': yt.thumbnail_url
         }
 
         parsed_streams.append(new_stream)

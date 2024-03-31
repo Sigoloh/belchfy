@@ -26,7 +26,8 @@ export async function getAudioStreamsByVideoId(videoId: string): Promise<StreamI
                     fileSize: element.file_size,
                     mimeType: element.mime_type,
                     title: element.title,
-                    url: element.url
+                    url: element.url,
+                    thumbnail: element.thumbnail
                 } as StreamInfo
             })
 
