@@ -2,7 +2,7 @@
 ## Because YouTube lost control over its ads
 
 # Kick-start
-As this project is in a very (VERY) early stage, I choose not to provide a built image yet. To see Belchfy with your very own eyes, build the Docker image and change the `compose.yml` file as needed to make it work for you.
+As this project is in a very (VERY) early stage, I choose not to provide a built image yet. To see Belchfy with your very own eyes, build the Docker image and change the `compose.yml` file as needed to make it work for you. You may also want to create a `.env.production`to set the main API address to the production mode of the `belchfy-fe` under the name `VITE_API_URL`
 
 # Overview
 Belchfy is a thin layer around [Pytube](https://pytube.io/) acting as a client to consume YouTube audio streams without the annoying ads. It presents this in a frontend where you can create queues and listen to YouTube playlists without having to watch 20-second ads to consume 2-minute songs.

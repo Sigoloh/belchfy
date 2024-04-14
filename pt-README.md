@@ -2,7 +2,7 @@
 ## Porque o YouTube perdeu o controle sobre seus anúncios
 
 # Início Rápido
-Como este projeto está em um estágio muito (MUITO) inicial, optei por não fornecer uma imagem já compilada. Para ver o Belchfy com seus próprios olhos, construa a imagem Docker e altere o arquivo `compose.yml` conforme necessário para fazê-lo funcionar para você.
+Como este projeto está em um estágio muito (MUITO) inicial, optei por não fornecer uma imagem já compilada. Para ver o Belchfy com seus próprios olhos, construa a imagem Docker e altere o arquivo `compose.yml` conforme necessário para fazê-lo funcionar para você. Você pode precisar criar um `.env.production` para definir a URL da API principal no diretório `belchfy-fe`
 
 # Visão Geral
 Belchfy é uma camada fina em torno do [Pytube](https://pytube.io/) atuando como um cliente para consumir streams de áudio do YouTube sem os anúncios irritantes. Ele apresenta isso em uma interface onde você pode criar filas e ouvir playlists do YouTube sem ter que assistir a anúncios de 20 segundos para consumir músicas de 2 minutos.
