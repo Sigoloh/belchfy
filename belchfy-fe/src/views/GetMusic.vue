@@ -30,7 +30,8 @@
                     <td class="playlist-actions" style="background-color: var(--yellow);">
                         <div class="action-buttons">
                             <button @click="addPlaylistToQueueAndPlayFirst">
-                                <v-icon name="fa-play"/>
+                                <v-icon name="fa-play" v-if="!state.loadingMusic"/>
+                                <v-icon name="ri-loader-3-line" animation="spin" v-else/>
                             </button>
                         </div>
                     </td>
@@ -39,7 +40,8 @@
                     <td class="video-thumbnail-container">
                         <div :style="`background: url(${video.thumbnail})`">
                             <div class="thumbnail-buttons">
-                                <v-icon class="icon-button" name="fa-play" fill="#FFF" @click="() => play(video.belchfy_url)"/>
+                                <v-icon class="icon-button" name="fa-play" fill="#FFF" @click="() => play(video.belchfy_url)" v-if="!state.loadingMusic"/>
+                                <v-icon name="ri-loader-3-line" fill="#FFF" animation="spin" v-else/>
                                 <v-icon class="icon-button" name="md-queue-outlined" fill="#FFF" @click="() => addVideoToQueue(video)"/>
                             </div>
                         </div>
@@ -225,6 +227,7 @@ import {getAllPlaylists, getPlaylist, updatePlaylistById} from '../api/belchfyCl
 import axios from 'axios'
 import {globalState} from '../global'
 import router from '@/router'
+import { PxToggleLeft } from 'oh-vue-icons/icons'
 export default{
     components: {
         Player,
@@ -233,7 +236,8 @@ export default{
         const state = reactive({
             playlistToSearch: '',
             result: undefined,
-            loadingPlaylist: false
+            loadingPlaylist: false,
+            loadingMusic: false
         })
         function parseTime(timeInSeconds){
             const minutes = String(Math.floor(timeInSeconds / 60))
@@ -253,14 +257,24 @@ export default{
             return state.loadingPlaylist = !state.loadingPlaylist
         }
 
+        function toggleLoadingMusic(){
+            console.log('Start loading music')
+            return state.loadingMusic = !state.loadingMusic
+        }
+
         async function play(url){
+            toggleLoadingMusic()
             const response = await axios.get(url)
             globalState.currentPlay = response.data[0]
             globalState.currentPlay.autoPlay = true
+            toggleLoadingMusic()
         }
 
         async function updatePlaylist(){
             try {
+                if(state.loadingPlaylist){
+                    return;
+                }
                 toggleLoadingPlaylist()
 
                 await updatePlaylistById(state.playlistToSearch)
@@ -280,6 +294,9 @@ export default{
         }
 
         async function searchPlaylist(){
+            if(state.loadingPlaylist){
+                return;
+            }
             toggleLoadingPlaylist()
             let playlistId = ''
             if(
@@ -300,6 +317,7 @@ export default{
         }
 
         async function addPlaylistToQueueAndPlayFirst(){
+            toggleLoadingMusic()
             for(const video of state.result.videos){
                 globalState.queue.add(video)
             }
@@ -307,9 +325,11 @@ export default{
             const { data } = await axios.get(globalState.queue.next().belchfy_url)
             globalState.currentPlay = data[0]
             globalState.currentPlay.autoPlay = true
+            toggleLoadingMusic()
         }
 
         async function addPlaylistToQueueShuffleAndPlayFirst(){
+            toggleLoadingMusic()
             for(const video of state.result.videos){
                 globalState.queue.add(video)
             }
@@ -320,6 +340,7 @@ export default{
             globalState.currentPlay = data[0]
 
             globalState.currentPlay.autoPlay = true
+            toggleLoadingMusic()
         }
 
         onBeforeMount(async () => {

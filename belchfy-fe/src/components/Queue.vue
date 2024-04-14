@@ -3,7 +3,8 @@
         <div class="queue-header">
             Queue
             <div class="queue-buttons">
-                <v-icon class="icon-button" name="fa-play" fill="#000" @click="play"/>
+                <v-icon class="icon-button" name="fa-play" fill="#000" @click="play" v-if="!state.loadingQueue"/>
+                <v-icon name="ri-loader-3-line" animation="spin" v-else/>
                 <v-icon class="icon-button" name="fa-random" fill="#000" @click="shuffle"/>
             </div>
         </div>
@@ -80,16 +81,24 @@ import {globalState} from '../global'
 import { VueMarqueeSlider } from 'vue3-marquee-slider';
 import '../../node_modules/vue3-marquee-slider/dist/style.css'
 import axios from 'axios'
+import { reactive } from 'vue';
 
 export default{
     components:{
         VueMarqueeSlider
     },
     setup(){
+        const state = reactive({
+            loadingQueue: false
+        })
         function removeVideoFromQueue(video){
             console.log('Entrou aqui')
             globalState.queue.delete(video)
             console.log(globalState.queue)
+        }
+
+        function toggleLoadingQueue(){
+            return state.loadingQueue = !state.loadingQueue
         }
 
         function shuffle(){
@@ -98,16 +107,19 @@ export default{
         }
 
         async function play(){
+            toggleLoadingQueue()
             const { data } = await axios.get(globalState.queue.next().belchfy_url)
             globalState.currentPlay = data[0]
             globalState.currentPlay.autoPlay = true
+            toggleLoadingQueue()
             return
         }
         return {
             globalState,
             shuffle,
             removeVideoFromQueue,
-            play
+            play,
+            state
         }
     } 
 }
