@@ -1,7 +1,7 @@
 import * as sqlite3 from 'sqlite3'
 import fs from 'fs'
 
-export const database = new sqlite3.Database('database.db')
+export const database = new sqlite3.Database('../sqlite/database.db')
 
 export function startDatabase(){
     const tables = fs.readdirSync('./databases/tables').filter((element: string) => {

@@ -44,9 +44,10 @@ export class MediaController{
 
            const streams = await getAudioStreamsByVideoId(videoId);
 
+           await this.streamCacheRepository.createStreamCache(streams, videoId, new Date(streams[0].expiresAt))
+
            response.json(streams)
 
-           this.streamCacheRepository.createStreamCache(streams, videoId, new Date(streams[0].expiresAt))
         } catch(error) {
             console.log(error)
             response.status(500).json({

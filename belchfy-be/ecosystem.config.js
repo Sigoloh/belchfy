@@ -5,6 +5,6 @@ module.exports = {
         {
             name: "backend",
             script: "./dist/app.js"
-        }
+        },
     ]
 }
