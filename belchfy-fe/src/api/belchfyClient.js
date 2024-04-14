@@ -24,3 +24,13 @@ export async function getAllPlaylists(){
         throw error
     }
 }
+
+export async function updatePlaylistById(playlistId){
+    try {
+        const response = await axiosClient.patch(`/playlists/update/${playlistId}`)
+        return response.status
+    } catch (error) {
+        console.log(error)
+        throw error    
+    }
+}

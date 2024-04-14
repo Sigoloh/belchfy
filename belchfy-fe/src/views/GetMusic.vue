@@ -2,8 +2,12 @@
     <div class="getmusic-container">
         <div class="search-container">
             <input type="text" v-model="state.playlistToSearch" placeholder="Playlist url or id">
-            <button @click="searchPlaylist">
+            <button @click="searchPlaylist" style="border-right: 1px solid var(--dark)">
                 <v-icon name="fa-search" v-if="!state.loadingPlaylist"/>
+                <v-icon name="ri-loader-3-line" animation="spin" v-else/>
+            </button>
+            <button @click="updatePlaylist">
+                <v-icon name="co-reload" v-if="!state.loadingPlaylist"/>
                 <v-icon name="ri-loader-3-line" animation="spin" v-else/>
             </button>
         </div>
@@ -217,7 +221,7 @@
 <script>
 import Player from '../components/Player.vue'
 import {reactive, onBeforeMount} from 'vue'
-import {getAllPlaylists, getPlaylist} from '../api/belchfyClient'
+import {getAllPlaylists, getPlaylist, updatePlaylistById} from '../api/belchfyClient'
 import axios from 'axios'
 import {globalState} from '../global'
 import router from '@/router'
@@ -253,6 +257,20 @@ export default{
             const response = await axios.get(url)
             globalState.currentPlay = response.data[0]
             globalState.currentPlay.autoPlay = true
+        }
+
+        async function updatePlaylist(){
+            try {
+                toggleLoadingPlaylist()
+
+                await updatePlaylistById(state.playlistToSearch)
+
+                await searchPlaylist()
+
+                toggleLoadingPlaylist()
+            } catch (error) {
+                console.log(error)
+            }
         }
 
         async function addVideoToQueue(video){
@@ -324,7 +342,8 @@ export default{
             play,
             addVideoToQueue,
             addPlaylistToQueueAndPlayFirst,
-            addPlaylistToQueueShuffleAndPlayFirst
+            addPlaylistToQueueShuffleAndPlayFirst,
+            updatePlaylist
         }
     }
 }

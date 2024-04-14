@@ -13,7 +13,8 @@ import {
      MdSkipnext, 
      MdSkipprevious, 
      RiLoader3Line,
-     FaAngleRight
+     FaAngleRight,
+     CoReload
 } from "oh-vue-icons/icons";
 
 
@@ -29,7 +30,8 @@ addIcons(
     MdSkipnext, 
     MdSkipprevious, 
     RiLoader3Line,
-    FaAngleRight
+    FaAngleRight,
+    CoReload
 );
 
 app.component("v-icon", OhVueIcon);
