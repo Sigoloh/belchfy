@@ -45,7 +45,7 @@ def search_youtube(query: str) -> list:
                 "thumbnail": result.thumbnail_url,
                 "views": result.views,
                 "video_id": result.video_id,
-                "belchfy_url": f'{NODE_BASE_API}/get/{result.video_id}'
+                "belchfy_url": f'{NODE_BASE_API}/media/youtube/get/{result.video_id}'
             }
 
             print(new_result)
@@ -77,7 +77,7 @@ def get_playlists(playlist_id: str):
             "thumbnail": video.thumbnail_url,
             "views": video.views,
             "video_id": video.video_id,
-            "belchfy_url": f'{NODE_BASE_API}/get/{video.video_id}'
+            "belchfy_url": f'{NODE_BASE_API}/media/youtube/get/{video.video_id}'
         }
         all_videos.append(new_video)
 

@@ -1,6 +1,8 @@
 import axios from 'axios'
+
+
 const axiosClient = axios.create({
-    baseURL: 'http://localhost:4152'
+    baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:4152'
 })
 
 export async function getPlaylist(playlistId){

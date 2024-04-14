@@ -1,0 +1,13 @@
+services:
+  app:
+    image: belchfy:latest
+    ports:
+      - 0.0.0.0:5000:5000
+      - 0.0.0.0:4152:4152
+      - 0.0.0.0:4173:4173
+    working_dir: /app
+    volumes:
+      - ./sqlite:/app/sqlite
+    environment:
+      # this env viariable is used in the python client
+      NODE_BASE_API: http://api.belchfy.belchlabs

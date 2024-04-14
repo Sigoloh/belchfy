@@ -7,7 +7,6 @@ YOUTUBE_URL = 'https://www.youtube.com/watch?v='
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def ping():  # put application's code here
     return 'pong'
@@ -42,4 +41,4 @@ def get_playlist(id):
     return Youtube_Provider.get_playlists(playlist_url)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
