@@ -18,7 +18,7 @@
         />
       </div>
 
-      <RouterView />
+      <RouterView :key="state.currentRoute"/>
     </div>
   </div>
 </template>
@@ -54,6 +54,8 @@ import SideBar from './components/SideBar.vue'
 import Player from './components/Player.vue'
 import {globalState} from './global'
 import axios from 'axios'
+import { reactive } from 'vue'
+import router from './router'
 export default{
   components: {
     SideBar,
@@ -63,7 +65,9 @@ export default{
   },
 
   setup(){
-
+    const state = reactive({
+      currentRoute: router.currentRoute
+    })
     async function playNext(){
       const next = globalState.queue.next()
       const { data } = await axios.get(next.belchfy_url)
@@ -82,7 +86,8 @@ export default{
     return{
       playPrevious,
       globalState,
-      playNext
+      playNext,
+      state
     }
   }
 }

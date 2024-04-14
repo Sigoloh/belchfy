@@ -4,6 +4,7 @@
             <h1>Belchfy</h1>
         </header>
         <main>
+            <Playlists/>
         </main>
         <footer>
             <Queue/>            
@@ -43,9 +44,11 @@
 
 <script>
 import Queue from './Queue.vue'
+import Playlists from './Playlists.vue'
 export default{
     components:{
         Queue,
+        Playlists
     },
     setup(){
         return;

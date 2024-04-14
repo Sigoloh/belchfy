@@ -3,12 +3,34 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaPlay, FaPause, FaSearch, FaRandom, MdQueueOutlined, MdPlaylistremove, MdSkipnext, MdSkipprevious} from "oh-vue-icons/icons";
+import {
+     FaPlay,
+     FaPause,
+     FaSearch,
+     FaRandom,
+     MdQueueOutlined,
+     MdPlaylistremove,
+     MdSkipnext, 
+     MdSkipprevious, 
+     RiLoader3Line,
+     FaAngleRight
+} from "oh-vue-icons/icons";
 
 
 const app = createApp(App)
 
-addIcons(FaPlay, FaPause, FaSearch, FaRandom, MdQueueOutlined, MdPlaylistremove, MdSkipnext, MdSkipprevious);
+addIcons(
+    FaPlay, 
+    FaPause, 
+    FaSearch, 
+    FaRandom, 
+    MdQueueOutlined, 
+    MdPlaylistremove, 
+    MdSkipnext, 
+    MdSkipprevious, 
+    RiLoader3Line,
+    FaAngleRight
+);
 
 app.component("v-icon", OhVueIcon);
 

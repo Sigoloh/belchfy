@@ -8,6 +8,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: GetMusic
+    },
+    {
+      path: '/playlist/:playlistId',
+      name: 'playlist',
+      component: GetMusic
     }
   ]
 })

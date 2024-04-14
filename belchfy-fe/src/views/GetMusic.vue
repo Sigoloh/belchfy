@@ -2,9 +2,12 @@
     <div class="getmusic-container">
         <div class="search-container">
             <input type="text" v-model="state.playlistToSearch" placeholder="Playlist url or id">
-            <button @click="searchPlaylist"><v-icon name="fa-search"/></button>
+            <button @click="searchPlaylist">
+                <v-icon name="fa-search" v-if="!state.loadingPlaylist"/>
+                <v-icon name="ri-loader-3-line" animation="spin" v-else/>
+            </button>
         </div>
-        <div class="playlist-container" v-if="state.result">
+        <div class="playlist-container" v-if="state.result" :key="state.playlistToSearch">
             <table class="video-table">
                 <tr class="table-header">
                     <td class="playlist-cell">
@@ -213,10 +216,11 @@
 
 <script>
 import Player from '../components/Player.vue'
-import {reactive} from 'vue'
-import {getPlaylist} from '../api/belchfyClient'
+import {reactive, onBeforeMount} from 'vue'
+import {getAllPlaylists, getPlaylist} from '../api/belchfyClient'
 import axios from 'axios'
 import {globalState} from '../global'
+import router from '@/router'
 export default{
     components: {
         Player,
@@ -224,7 +228,8 @@ export default{
     setup(){
         const state = reactive({
             playlistToSearch: '',
-            result: undefined
+            result: undefined,
+            loadingPlaylist: false
         })
         function parseTime(timeInSeconds){
             const minutes = String(Math.floor(timeInSeconds / 60))
@@ -240,6 +245,10 @@ export default{
             return `${minutes}:${seconds}`
         }
 
+        function toggleLoadingPlaylist(){
+            return state.loadingPlaylist = !state.loadingPlaylist
+        }
+
         async function play(url){
             const response = await axios.get(url)
             globalState.currentPlay = response.data[0]
@@ -253,6 +262,7 @@ export default{
         }
 
         async function searchPlaylist(){
+            toggleLoadingPlaylist()
             let playlistId = ''
             if(
                 state.playlistToSearch.match(
@@ -266,6 +276,9 @@ export default{
             }
 
             state.result = await getPlaylist(playlistId)
+
+            globalState.playlists = await getAllPlaylists()
+            toggleLoadingPlaylist()
         }
 
         async function addPlaylistToQueueAndPlayFirst(){
@@ -290,6 +303,19 @@ export default{
 
             globalState.currentPlay.autoPlay = true
         }
+
+        onBeforeMount(async () => {
+            const {playlistId} = router.currentRoute.value.params
+
+            if(!playlistId){
+                return
+            }
+
+            state.playlistToSearch = playlistId
+
+            await searchPlaylist()
+            return;
+        })
 
         return {
             state,

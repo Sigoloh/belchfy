@@ -14,3 +14,13 @@ export async function getPlaylist(playlistId){
         throw error 
     }
 }
+
+export async function getAllPlaylists(){
+    try {
+        const response = await axiosClient.get('/playlists/get') 
+        return response.data 
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
