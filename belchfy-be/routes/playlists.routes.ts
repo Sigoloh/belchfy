@@ -11,4 +11,6 @@ const playlistController = new PlaylistController(playlistRepository)
 
 playlistRouter.get('/get/:playlistId', playlistController.getPlaylist.bind(playlistController))
 
+playlistRouter.get('/get', playlistController.getAllPlaylists.bind(playlistController))
+
 playlistRouter.patch('/update/:playlistId', playlistController.updatePlaylistVideos.bind(playlistController))

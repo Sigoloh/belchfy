@@ -66,4 +66,32 @@ export class PlaylistController{
             return;
         }
     }
+
+    async getAllPlaylists(request: Request, response: Response): Promise<void>{
+        try {
+            const results = await this.playlistRepository.getAllPlaylists();
+
+            if(!results){
+                response.status(204).json({
+                    title: "Error geting playlists",
+                    detail: "No playlist found",
+                    status: 204,
+                    instance: request.path
+                })
+
+                return;
+            }
+
+            response.status(200).json(results)
+        } catch (error) {
+            response.status(500).json({
+                title: "Error searching for playlist on Youtube",
+                detail: "An unkown error has been catched, see logs for more info",
+                status: 500,
+                instance: request.path
+            })
+            console.log(error)
+            return;   
+        }
+    }
 }

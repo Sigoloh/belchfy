@@ -129,4 +129,44 @@ export class PlaylistRepository implements IPlaylistRepository{
            throw error
         }
     }
+
+    async getAllPlaylists(): Promise<Playlist[] | null>{
+        try {
+            const query = `
+                SELECT
+                    *
+                FROM
+                    playlists 
+            `
+
+            const sqlPromise: any[] = await (new Promise((resolve, reject) => {
+                this.database.all(query, (err: any, rows: any[]) => {
+                    if(err){
+                        reject(err)
+                        return
+                    }
+
+                    resolve(rows)
+                })
+            }))
+
+            const parsedResults = sqlPromise.map((element: any) => {
+                return {
+                    id: element.id,
+                    belchfyUrl: element.belchfy_url,
+                    owner: element.owner,
+                    playlistId: element.playlist_id,
+                    title: element.title,
+                    videos: JSON.parse(element.videos),
+                    createdAt: new Date(element.created_at),
+                    lastUpdated: new Date(element.last_updated)
+                } as Playlist
+            })
+
+            return parsedResults
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    }
 }
