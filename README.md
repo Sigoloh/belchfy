@@ -13,7 +13,7 @@ The `pydub` [API](./belchfy-py) receives requests from the main API and collects
 # What I want to add to Belchfy?
 ### Well, I have a dream
 I want to make Belchfy as close to YouTube Music as possible. Here's my roadmap to achieve this:
-- [ ] Routines to update stream URLs every time the cached one expires
+- [X] Routines to update stream URLs every time the cached one expires
 - [ ] Recommendation algorithm using web scraping so YouTube can't cancel my API keys
 - [ ] A better front-end
 - [ ] A way to get the user's YouTube feed and present it on the front-end without much latency

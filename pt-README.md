@@ -1,6 +1,8 @@
 # Belchfy [en](https://github.com/Sigoloh/belchfy/blob/main/README.md)
 ## Porque o YouTube perdeu o controle sobre seus anúncios
 
+PLmpaUKKSt5327WQC3ukL4r_Lw25bFm8gl
+
 # Início Rápido
 Como este projeto está em um estágio muito (MUITO) inicial, optei por não fornecer uma imagem já compilada. Para ver o Belchfy com seus próprios olhos, construa a imagem Docker e altere o arquivo `compose.yml` conforme necessário para fazê-lo funcionar para você. Você pode precisar criar um `.env.production` para definir a URL da API principal no diretório `belchfy-fe`
 
@@ -13,7 +15,7 @@ A API `pydub` [API](./belchfy-py) recebe solicitações da API principal e colet
 # O que quero adicionar ao Belchfy?
 ### Bem, eu tenho um sonho
 Quero fazer o Belchfy ser o mais parecido possível com o YouTube Music. Aqui está o meu roadmap para alcançar isso:
-- [ ] Rotinas para atualizar URLs de stream toda vez que a cacheada expirar
+- [X] Rotinas para atualizar URLs de stream toda vez que a cacheada expirar
 - [ ] Algoritmo de recomendação usando web scraping para que o YouTube não possa cancelar minhas chaves de API
 - [ ] Uma interface melhor
 - [ ] Uma maneira de obter o feed do YouTube do usuário e apresentá-lo na interface sem muita latência
