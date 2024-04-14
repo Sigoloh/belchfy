@@ -1,4 +1,4 @@
-# Belchfy
+# Belchfy [en](https://github.com/Sigoloh/belchfy/blob/main/README.md)
 ## Porque o YouTube perdeu o controle sobre seus anúncios
 
 # Início Rápido

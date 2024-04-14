@@ -1,4 +1,4 @@
-# Belchfy (pt)[pt-REAMDE]
+# Belchfy [pt-Br](https://github.com/Sigoloh/belchfy/blob/main/pt-README.md)
 ## Because YouTube lost control over its ads
 
 # Kick-start
