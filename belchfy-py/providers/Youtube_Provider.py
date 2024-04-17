@@ -3,7 +3,7 @@ from pytube import Search
 from pytube import Playlist
 import os
 
-NODE_BASE_API = os.getenv("NODE_BASE_API") if os.getenv("NODE_BASE_API") else 'http://localhost:4152/media/youtube'
+NODE_BASE_API = os.getenv("NODE_BASE_API") if os.getenv("NODE_BASE_API") else 'http://localhost:4152'
 
 
 def get_audio_streams(url: str) -> list:
