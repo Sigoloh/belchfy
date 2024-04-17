@@ -1,3 +1,4 @@
+import { createAdminUser } from "./databases/createAdminUser";
 import { database, startDatabase } from "./databases/sqlite";
 
 import { server } from "./server";
@@ -9,6 +10,8 @@ dotenv.config()
 console.log('[SYSTEM] Starting database')
 
 startDatabase()
+
+createAdminUser()
 
 const serverPort = process.env.PROCESS_PORT ?? 4152;
 
